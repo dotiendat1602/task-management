@@ -14,7 +14,18 @@ module.exports.index = async (req, res) => {
     }
     // Hết Lọc theo trạng thái
 
-    const tasks = await Task.find(find);
+    // Sắp xếp
+    const sort = {};
+
+    const sortKey = req.query.sortKey;
+    const sortValue = req.query.sortValue;
+
+    if(sortKey && sortValue){
+        sort[sortKey] = sortValue;
+    }
+    // Hêt Sắp xếp
+
+    const tasks = await Task.find(find).sort(sort);
 
     res.json(tasks);
 }
