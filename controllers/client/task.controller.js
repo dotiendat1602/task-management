@@ -33,7 +33,7 @@ module.exports.index = async (req, res) => {
     // Hêt Sắp xếp
 
     // Phân trang
-    let limitItems = 2;
+    let limitItems = 3;
     if(req.query.limitItems) {
         limitItems = parseInt(req.query.limitItems);
     }
@@ -123,6 +123,27 @@ module.exports.edit = async (req, res) => {
   
       res.json({
         message: "Cập nhật công việc thành công!"
+      });
+    } catch (error) {
+      res.json({
+        message: "Not Found"
+      });
+    }
+}
+
+// [PATCH] /tasks/delete
+module.exports.delete = async (req, res) => {
+    try {
+      const ids = req.body.ids;
+  
+      await Task.updateMany({
+        _id: { $in: ids }
+      }, {
+        deleted: true
+      });
+  
+      res.json({
+        message: "Xóa công việc thành công!"
       });
     } catch (error) {
       res.json({
