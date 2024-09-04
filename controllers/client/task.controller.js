@@ -111,3 +111,22 @@ module.exports.create = async (req, res) => {
       });
     }
 }
+
+// [PATCH] /tasks/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+      const id = req.params.id;
+
+      await Task.updateOne({
+        _id: id
+      }, req.body);
+  
+      res.json({
+        message: "Cập nhật công việc thành công!"
+      });
+    } catch (error) {
+      res.json({
+        message: "Not Found"
+      });
+    }
+}
