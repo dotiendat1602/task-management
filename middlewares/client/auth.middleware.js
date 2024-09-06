@@ -32,6 +32,7 @@ module.exports.requireAuth = async (req, res, next) => {
     return;
   }
 
+  req.user = user;
   req.tokenVerify = token;
 
   next();

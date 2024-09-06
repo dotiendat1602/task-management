@@ -98,6 +98,8 @@ module.exports.changeStatus = async (req, res) => {
 // [POST] /tasks/create
 module.exports.create = async (req, res) => {
     try {
+      req.body.createdBy = req.user.id;
+
       const task = new Task(req.body);
       await task.save();
   
