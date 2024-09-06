@@ -165,3 +165,26 @@ module.exports.resetPassword = async (req, res) => {
         message: "Đổi mật khẩu thành công!"
     });
 }
+
+// [GET] /users/profile
+module.exports.profile = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const user = await User.findOne({
+            _id: id,
+            deleted: false
+        }).select("-password -token");
+    
+        res.json({
+            code: 200,
+            message: "Thành công!",
+            user: user
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "ID người dùng không hợp lệ!"
+        });
+    }
+}
