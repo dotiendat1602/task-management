@@ -169,10 +169,8 @@ module.exports.resetPassword = async (req, res) => {
 // [GET] /users/profile
 module.exports.profile = async (req, res) => {
     try {
-        const id = req.params.id;
-
         const user = await User.findOne({
-            _id: id,
+            token: req.tokenVerify,
             deleted: false
         }).select("-password -token");
     
@@ -184,7 +182,7 @@ module.exports.profile = async (req, res) => {
     } catch (error) {
         res.json({
             code: 400,
-            message: "ID người dùng không hợp lệ!"
+            message: "Không hợp lệ!"
         });
     }
 }
