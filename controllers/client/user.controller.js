@@ -141,11 +141,27 @@ module.exports.otpPassword = async (req, res) => {
         email: email
     });
   
-    console.log(user);
-  
     res.json({
         code: 200,
         message: "Xác thực thành công!",
         token: user.token
     });
-  }
+}
+
+// [POST] /users/password/reset
+module.exports.resetPassword = async (req, res) => {
+    const token = req.body.token;
+    const password = req.body.password;
+
+    await User.updateOne({
+        token: token,
+        deleted: false
+    }, {
+        password: md5(password)
+    });
+  
+    res.json({
+        code: 200,
+        message: "Đổi mật khẩu thành công!"
+    });
+}
